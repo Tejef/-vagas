@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmação</title>
+  <link href="codigo.css" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="image/logo.png" id="logo-final" alt="logo do site" />
+    </div>
+
+    <div class="codigo">
+      <h2>Digite o código de verificação</h2>
+      <div class="texto">
+        <h2>Enviado para seu e-mail</h2>
+      </div>
+    </div>
+
+    <div class="input">
+      <input type="number" placeholder="Código" />
+    </div>
+
+    <div class="botao">
+      <button><a href="index.html"><b>CONFIRMAR</b></a></button>
+    </div>
+  </div>
+
+</body>
+<script>
+  const botaoConfirmar = document.querySelector('button');
+  
+  botaoConfirmar.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const codigo = document.querySelector('input').value;
+    const email = localStorage.getItem('emailUsuario');
+
+    if(!codigo){
+      alert('Digite o código.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/usuarios/verificar-codigo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, codigo })
+      });
+
+      const data = await response.json();
+
+      if(response.ok){
+        alert(data.mensagem);
+        // Código verificado, pode limpar o localStorage e ir para home
+        localStorage.removeItem('emailUsuario');
+        window.location.href = 'pagina-inicial.html';  // sua página inicial após login
+      } else {
+        alert(data.erro || 'Código inválido.');
+      }
+    } catch(err){
+      alert('Erro ao conectar ao servidor.');
+      console.error(err);
+    }
+  });
+</script>
+
+</html>

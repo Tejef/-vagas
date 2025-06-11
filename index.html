@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página Responsiva</title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="image/logo.png" id="logo-final" alt="logo do site" />
+    </div>
+
+    <div class="login-senha">
+      <div class="login">
+        <label><b>Login:</b></label>
+        <input type="text" />
+      </div>
+
+      <div class="senha">
+        <label><b>Senha:</b></label>
+        <input type="password" />
+      </div>
+
+      <div class="botao-entrar">
+        <button class="entrar"><a href="#"><b>ENTRAR</b></a></button>
+      </div>
+
+      <h2 class="ou">-------------------- OU --------------------</h2>
+
+      <div class="botao-cadastrar">
+        <button class="cadastrar"><a href="cadastro.html"><b>CADASTRAR</b></a></button>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script>
+  const botaoEntrar = document.querySelector('.entrar');
+
+  botaoEntrar.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const email = document.querySelector('.login input').value;
+    const senha = document.querySelector('.senha input').value;
+
+    if(!email || !senha){
+      alert('Preencha todos os campos.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/usuarios/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, senha })
+      });
+
+      const data = await response.json();
+
+      if(response.ok){
+        alert(data.mensagem);
+        // Armazene o email em localStorage para usar na verificação do código
+        localStorage.setItem('emailUsuario', email);
+        window.location.href = 'codigo.html';
+      } else {
+        alert(data.erro || 'Erro desconhecido.');
+      }
+    } catch(err){
+      alert('Erro ao conectar ao servidor.');
+      console.error(err);
+    }
+  });
+</script>
+
+</html>

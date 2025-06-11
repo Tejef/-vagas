@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <link href="cadastro.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="image/logo.png" id="logo-final" alt="logo do site" />
+    </div>
+
+    <div class="registro">
+      <div class="usuario">
+        <label><b>Usuário</b></label>
+        <input type="text" />
+      </div>
+
+      <div class="email">
+        <label><b>E-mail</b></label>
+        <input type="email" />
+      </div>
+
+      <div class="senha">
+        <label><b>Senha</b></label>
+        <input type="password" />
+      </div>
+    </div>
+
+    <div class="botao">
+      <button><a href="codigo.html"><b>CADASTRAR</b></a></button>
+    </div>
+  </div>
+
+</body>
+<script>
+  const botao = document.querySelector('button');
+
+  botao.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const usuario = document.querySelector('.usuario input').value;
+    const email = document.querySelector('.email input').value;
+    const senha = document.querySelector('.senha input').value;
+
+    if(!usuario || !email || !senha){
+      alert('Preencha todos os campos.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/usuarios/cadastro', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ usuario, email, senha })
+      });
+
+      const data = await response.json();
+
+      if(response.ok){
+        alert(data.mensagem);
+        window.location.href = 'index.html';  // volta para login
+      } else {
+        alert(data.erro || 'Erro desconhecido.');
+      }
+    } catch(err){
+      alert('Erro ao conectar ao servidor.');
+      console.error(err);
+    }
+  });
+</script>
+
+</html>

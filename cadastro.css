@@ -1,0 +1,91 @@
+/* Reset e base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #FFC107;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Container principal */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.logo img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.registro {
+  margin: 20px 0;
+}
+
+.usuario,
+.email,
+.senha {
+  margin: 15px 0;
+  text-align: left;
+}
+
+label {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input {
+  width: 100%;
+  max-width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+/* Botão */
+.botao {
+  margin-top: 30px;
+}
+
+button {
+  width: 100%;
+  max-width: 250px;
+  height: 45px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 10px;
+  background: #454545;
+  color: #FFC107;
+  cursor: pointer;
+}
+
+button a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 45px;
+  color: #FFC107;
+  text-decoration: none;
+}
+
+/* Responsividade adicional */
+@media (max-width: 480px) {
+  label {
+    font-size: 1em;
+  }
+
+  button {
+    font-size: 1em;
+  }
+}
